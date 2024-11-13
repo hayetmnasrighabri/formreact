@@ -1,16 +1,15 @@
 import React from 'react'
 
-function Checkbox({checked, onChange, label, id}) {
+function Checkbox({checked, onChange, label}) {
   return (
     <div className='form-check'>
       <input
-       id={id}
         type='checkbox'
         className='form-ckeck-input'
         checked={checked}
         onChange={(e)=>onChange(e.target.checked)}
       />
-      <label htmlFor={id} className='form-check-label'>{label}</label>
+      <label className='form-check-label'>{label}</label>
     </div>
   )
 }
