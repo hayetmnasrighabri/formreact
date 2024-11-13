@@ -1,40 +1,41 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
-function App() {
-  const [duration, setDuration]=useState(5)
-  const [secondLeft, setSecondLeft]= useState(duration)
+import React, { useMemo, useState } from 'react'
+import Input from './components/Input'
 
-  const handleChange=(e)=>{
-    const v= e.target.value
-    setDuration(v)
-    setSecondLeft(v)
-  }
-  useEffect(()=>{
-     const timer= setInterval(()=>{
-      setSecondLeft(v=>{
-        if (v<=1){
-          clearInterval(timer)
-          return 0
-        }
-        return v-1
-      })
-     },1000)
-     return()=>{
-      clearInterval(timer)
-     }
-  },[duration])
+function App() {
+ const [firstname, setFirstname]=useState('John')
+ const [password, setPassword]=useState('MotDePasse')
+
+ const security= useMemo(()=>{
   return (
-    <div className='vstack gap-2'>
-      <input
-        value={duration}
-        onChange={handleChange}
-        placeholder='Timer...'  
+    passwordSecurity(password)
+  )
+ },[password])   
+  return (
+    <div className='container my-3 vstack gap-2'>
+    <div>
+      <Input
+       label="Nom d'utilisateur"
+       value={firstname}
+       onChange={setFirstname}
       />
-      <p>
-        Décompte: {secondLeft}
-      </p>
+      </div>
+      <div>
+      <Input
+        label="Password"
+        value={password}
+        onChange={setPassword}      
+      />
+      sécurite: {security}
     </div>
+  </div>
   )
 }
-
+function passwordSecurity(password){
+  if (password.length<3){
+    return 'Faible'
+  }else if (password.length<6){
+    return 'Moyen'
+  }
+  return 'Fort'
+}
 export default App

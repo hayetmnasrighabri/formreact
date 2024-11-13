@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Input({value, onChange, placeholder}) {
+function Input({value, onChange, label}) {
   return (
     <div>
       <input
        type='text'
-       placeholder={placeholder}
+       label={label}
        value={value}
        onChange={(e)=>onChange(e.target.value)}
       />
