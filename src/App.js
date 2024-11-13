@@ -1,54 +1,40 @@
-import React, {useEffect, useState } from 'react'
-import Input from './components/Input'
-import Checkbox from './components/Checkbox'
+import React, { useEffect } from 'react'
+import { useState } from 'react'
 function App() {
- const [showInput, setShowInput]= useState(true)
-  return (
-    <div className='container my-3 stack'>
-      <Checkbox 
-       checked={showInput}
-       onChange={setShowInput}
-       id="titleshow"
-       label="Afficher le champs titre"
-      />
-      {showInput && <EditTitle/>}
-      <div style={{height: '300vh'}}></div>
+  const [duration, setDuration]=useState(5)
+  const [secondLeft, setSecondLeft]= useState(duration)
 
-      
-    </div>
-  )
-}
-function EditTitle(){
-  const [title, setTitle]=useState('')
-  const [firstname, setFirstname]= useState('')
-  const[y, setY]=useState(0)
+  const handleChange=(e)=>{
+    const v= e.target.value
+    setDuration(v)
+    setSecondLeft(v)
+  }
   useEffect(()=>{
-    console.log("title")
-    document.title=title
- },[title])
- useEffect(()=>{
-window.addEventListener('scroll',(e)=>{
-  setY(window.scrollY)
-})
- },[])
- return(
+     const timer= setInterval(()=>{
+      setSecondLeft(v=>{
+        if (v<=1){
+          clearInterval(timer)
+          return 0
+        }
+        return v-1
+      })
+     },1000)
+     return()=>{
+      clearInterval(timer)
+     }
+  },[duration])
+  return (
     <div className='vstack gap-2'>
-      <div>
-        scroll: {y}
-      </div>
-    
-      <Input
-       placeholder="Modifier le titre"
-       value={title}
-       onChange={setTitle}
+      <input
+        value={duration}
+        onChange={handleChange}
+        placeholder='Timer...'  
       />
-      <Input 
-       placeholder="Prénom"
-       value={firstname}
-       onChange={setFirstname}
-      />
-
+      <p>
+        Décompte: {secondLeft}
+      </p>
     </div>
   )
 }
+
 export default App
