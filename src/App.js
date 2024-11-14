@@ -1,18 +1,14 @@
-//import React, {useState} from 'react';
-import useToggle from './hooks/useToggle';
+import React from 'react'
+import useIncrement from './hooks/useIncrement'
 function App() {
-  const [checked, toggleCheck] = useToggle()
-
+  const [count, increment, decrement]=useIncrement(0)
   return (
     <div>
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={toggleCheck}
-      />
-      {checked && 'je suis coché'}
+      <h1>Compteur:{count}</h1>
+      <button onClick={increment}>Incrémenter</button>
+      <button onClick={decrement}>Décrémenter</button>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
