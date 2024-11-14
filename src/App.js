@@ -1,18 +1,25 @@
-import React, { useState } from 'react'
-import useIncrement from './hooks/useIncrement'
-import useDocumentTitle from './hooks/useDocumentTitle'
+import React from 'react';
+import useFetch from './hooks/useFetch';
+
 function App() {
-  const [count, increment, decrement]=useIncrement(0)
-  const [name, setName]= useState('')
-   useDocumentTitle('Editer' +name)
+  const { loading, data, errors } = useFetch('https://jsonplaceholder.typicode.com/posts');
+
   return (
     <div>
-      <input value={name} onChange={(e)=>setName(e.target.value)} label="Nom"/>
-      <h1>Compteur:{count}</h1>
-      <button onClick={increment}>Incrémenter</button>
-      <button onClick={decrement}>Décrémenter</button>
+      {loading && <div>Chargement...</div>}
+      {errors && <div>Erreur : {errors}</div>}
+      {data && (
+        <div>
+          <ul>
+          {data.map((post) => (
+            <li key={post.id}>{post.title}</li>
+            
+          ))}
+          </ul>
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
