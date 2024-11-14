@@ -1,41 +1,18 @@
-import React, { useMemo, useState } from 'react'
-import Input from './components/Input'
-
+//import React, {useState} from 'react';
+import useToggle from './hooks/useToggle';
 function App() {
- const [firstname, setFirstname]=useState('John')
- const [password, setPassword]=useState('MotDePasse')
+  const [checked, toggleCheck] = useToggle()
 
- const security= useMemo(()=>{
   return (
-    passwordSecurity(password)
-  )
- },[password])   
-  return (
-    <div className='container my-3 vstack gap-2'>
     <div>
-      <Input
-       label="Nom d'utilisateur"
-       value={firstname}
-       onChange={setFirstname}
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={toggleCheck}
       />
-      </div>
-      <div>
-      <Input
-        label="Password"
-        value={password}
-        onChange={setPassword}      
-      />
-      sécurite: {security}
+      {checked && 'je suis coché'}
     </div>
-  </div>
-  )
+  );
 }
-function passwordSecurity(password){
-  if (password.length<3){
-    return 'Faible'
-  }else if (password.length<6){
-    return 'Moyen'
-  }
-  return 'Fort'
-}
-export default App
+
+export default App;
